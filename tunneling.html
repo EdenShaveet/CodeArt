@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tunneling</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .square1 {
+    width: 400px;
+    height: 400px;
+    background-color: rgba(144, 144, 144, 0.5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .square2 {
+    width: 90%;
+    height: 90%;
+    background-color: rgba(152, 152, 152, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .square3 {
+    width: 80%;
+    height: 80%;
+    background-color: rgba(160, 160, 160, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .square4 {
+    width: 70%;
+    height: 70%;
+    background-color: rgba(168, 168, 168, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .square5 {
+    width: 60%;
+    height: 60%;
+    background-color: rgba(176, 176, 176, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .square6 {
+    width: 50%;
+    height: 50%;
+    background-color: rgba(182, 182, 182, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .square7 {
+    width: 40%;
+    height: 40%;
+    background-color: rgba(190, 190, 190, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div class="square1">
+  <div class="square2">
+    <div class="square3">
+	  <div class="square4">
+	    <div class="square5">
+		  <div class="square6">
+		    <div class="square7">
+	        </div>
+	      </div>
+		  </div>
+		</div>
+	  </div>
+  </div>
+</div>
+<script>
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+  
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  const starCount = 500;
+  const stars = [];
+
+  for (let i = 0; i < starCount; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 2,
+      opacity: Math.random(),
+      fadeIn: true
+    });
+  }
+
+  function draw() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    
+    context.fillStyle = 'white';
+    for (const star of stars) {
+      if (star.fadeIn) {
+        star.opacity += 0.05;
+        if (star.opacity >= 1) {
+          star.opacity = 1;
+          star.fadeIn = false;
+        }
+      } else {
+        star.opacity -= 0.05;
+        if (star.opacity <= 0) {
+          star.opacity = 0;
+          star.fadeIn = true;
+        }
+      }
+
+      context.beginPath();
+      context.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      context.globalAlpha = star.opacity;
+      context.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+</script>
+</body>
+</html>
